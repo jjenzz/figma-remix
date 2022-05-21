@@ -1,6 +1,21 @@
-# Welcome to Remix!
+# Figma Remix
 
 - [Remix Docs](https://remix.run/docs)
+
+## Development
+
+1. Follow the "[Create a project](https://supabase.com/docs/guides/with-react#create-a-project)" steps for Supabase
+2. [Get the connection string from the Supabase project settings](https://supabase.com/docs/guides/integrations/prisma#step-1-get-the-connection-string-from-supabase-project-settings)
+3. Rename the `.env.dev` file to `.env` and replace the `DATABASE_URL` with the connection string from Supabase
+4. Remember to change the password in the connection string!
+
+Then, from your terminal:
+
+```sh
+npm run dev
+```
+
+This starts your app in development mode, rebuilding assets on file changes.
 
 ## Fly Setup
 
@@ -17,16 +32,6 @@ flyctl auth signup
 ```sh
 flyctl launch
 ```
-
-## Development
-
-From your terminal:
-
-```sh
-npm run dev
-```
-
-This starts your app in development mode, rebuilding assets on file changes.
 
 ## Deployment
 

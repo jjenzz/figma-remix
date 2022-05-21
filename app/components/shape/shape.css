@@ -1,0 +1,21 @@
+.shape {
+  position: absolute;
+  left: var(--shape-x, 50%);
+  top: var(--shape-y, 50%);
+  width: var(--shape-width, 200px);
+  height: var(--shape-height, 200px);
+  background: var(--shape-background, #ccc);
+  text-decoration: none;
+  outline: none;
+}
+
+.shape:target,
+.shape:hover,
+.shape--active {
+  outline: 2px solid royalblue;
+  outline-offset: 2px;
+}
+
+.shape--circle {
+  border-radius: 9999px;
+}

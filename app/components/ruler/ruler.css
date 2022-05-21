@@ -1,0 +1,90 @@
+.ruler {
+  --ruler-num-c: #aaa;
+  --ruler-num-fz: 10px;
+  --ruler-num-pi: 0.75ch;
+  --ruler-unit: 1px;
+  --ruler-x: 1;
+  --ruler-y: 1;
+
+  --ruler1-bdw: 1px;
+  --ruler1-c: #ccc;
+  --ruler1-h: 8px;
+  --ruler1-space: 5;
+
+  --ruler2-bdw: 1px;
+  --ruler2-c: #ccc;
+  --ruler2-h: 20px;
+  --ruler2-space: 50;
+
+  pointer-events: none;
+  color: var(--ruler-num-c);
+  counter-reset: d 0;
+  display: flex;
+  font-size: var(--ruler-num-fz);
+  line-height: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: sticky;
+  overflow: hidden;
+
+  background-image: linear-gradient(90deg, var(--ruler1-c) 0 var(--ruler1-bdw), transparent 0),
+    linear-gradient(90deg, var(--ruler2-c) 0 var(--ruler2-bdw), transparent 0),
+    linear-gradient(0deg, var(--ruler1-c) 0 var(--ruler1-bdw), transparent 0),
+    linear-gradient(0deg, var(--ruler2-c) 0 var(--ruler2-bdw), transparent 0);
+  background-position: 0 0;
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  background-size: calc(var(--ruler-unit) * var(--ruler1-space) * var(--ruler-x)) var(--ruler1-h),
+    calc(var(--ruler-unit) * var(--ruler2-space) * var(--ruler-x)) var(--ruler2-h),
+    var(--ruler1-h) calc(var(--ruler-unit) * var(--ruler1-space) * var(--ruler-y)),
+    var(--ruler2-h) calc(var(--ruler-unit) * var(--ruler2-space) * var(--ruler-y));
+}
+
+.ruler__tick {
+  counter-increment: d var(--ruler2-space);
+  flex: 0 0 calc(var(--ruler-unit) * var(--ruler2-space));
+}
+
+.ruler--horizontal {
+  height: var(--ruler2-h);
+  inset-block-start: 0;
+  inset-inline-start: calc(var(--ruler-unit) * var(--ruler2-space));
+  opacity: var(--ruler-x);
+  width: var(--canvas-width);
+  top: 0;
+  left: auto;
+  padding-left: 50px;
+}
+
+.ruler--vertical {
+  flex-direction: column;
+  height: var(--canvas-height);
+  inset-block-start: calc(var(--ruler-unit) * var(--ruler2-space));
+  inset-inline-start: 0;
+  opacity: var(--ruler-y);
+  width: var(--ruler2-h);
+  left: 0;
+  top: auto;
+  margin-top: -20px;
+  padding-top: 50px;
+}
+
+.ruler--horizontal .ruler__tick {
+  align-self: flex-end;
+}
+
+.ruler--horizontal .ruler__tick::after {
+  content: counter(d) '';
+  line-height: 1;
+  padding-inline-start: var(--ruler-num-pi);
+}
+
+.ruler--vertical .ruler__tick::after {
+  content: counter(d) '';
+  display: block;
+  padding-inline-end: var(--ruler-num-pi);
+  transform: rotate(-90deg) translateY(-15px);
+  transform-origin: 100% 0%;
+  text-align: end;
+  width: 100%;
+}

@@ -1,0 +1,24 @@
+.layers {
+  background: white;
+  all: unset;
+  display: flex;
+  flex-direction: column;
+}
+
+.layers__trigger {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+  font-size: 14px;
+  transition: all 200ms;
+  cursor: default;
+}
+
+.layers__trigger--active {
+  background: #daecf7;
+}
+
+.layers__trigger:not(.layers__trigger--active):hover {
+  box-shadow: inset 0 0 0 1px royalblue;
+}

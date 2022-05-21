@@ -1,0 +1,26 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ShapeType {
+  RECT
+  CIRCLE
+}
+
+model Shape {
+  id                Int @id @default(autoincrement())
+  type              ShapeType
+  background_color  String?
+  width             Int
+  height            Int
+  x                 Int?
+  y                 Int?
+}
