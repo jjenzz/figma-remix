@@ -28,7 +28,7 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const shapeData = shapeModel.parse<Prisma.ShapeCreateInput>(formData);
   const shape = await shapeModel.createShape(shapeData);
-  return redirect(`/${shape.id}/#shape-${shape.id}`);
+  return redirect(`/s/${shape.id}/#shape-${shape.id}`);
 };
 
 export default function NewShape() {
