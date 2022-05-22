@@ -23,7 +23,7 @@ interface LayersItemProps {
 const LayersItem = ({ layerId, active = false, children }: LayersItemProps) => (
   <li className="layers__item">
     <a
-      href={`/${layerId}`}
+      href={`/s/${layerId}`}
       className={clsx('layers__trigger', active && 'layers__trigger--active')}
     >
       {children}
