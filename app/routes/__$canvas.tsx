@@ -62,7 +62,7 @@ export default function Index() {
             {data.shapes.map((shape) => (
               <Shape.Root
                 key={shape.id}
-                href={`/${shape.id}`}
+                href={`/s/${shape.id}`}
                 id={`shape-${shape.id}`}
                 active={shape.id === data.activeShapeId}
                 type={shape.type.toLowerCase() as any}
