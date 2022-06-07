@@ -8,10 +8,28 @@
 2. [Get the connection string from the Supabase project settings](https://supabase.com/docs/guides/integrations/prisma#step-1-get-the-connection-string-from-supabase-project-settings)
 3. Rename the `.env.dev` file to `.env` and replace the `DATABASE_URL` with the connection string from Supabase
 4. Remember to change the password in the connection string!
+5. Run `npm run migrate` to set up the database
 
 Then, from your terminal:
 
 ```sh
+npm run dev
+```
+
+This starts your app in development mode, rebuilding assets on file changes.
+
+### Local Development
+
+Alternatively, for local-only development:
+
+1. [Install the Supabase CLI](https://supabase.com/docs/guides/local-development#dependencies) and prerequisites (Docker)
+2. Rename the `.env.dev` file to `.env`, keeping the `DATABASE_URL` pointing to localhost
+3. Run `npm run migrate` to set up the database
+
+Then, from your terminal:
+
+```sh
+supabase start
 npm run dev
 ```
 
