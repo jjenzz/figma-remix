@@ -1,12 +1,14 @@
+import { Form } from '@remix-run/react';
+
 /* -------------------------------------------------------------------------------------------------
  * Toolbar
  * -----------------------------------------------------------------------------------------------*/
 
-interface ToolbarProps extends React.ComponentProps<'form'> {
+interface ToolbarProps extends React.ComponentProps<typeof Form> {
   children: React.ReactNode;
 }
 
-const Toolbar = (props: ToolbarProps) => <form {...props} className="toolbar" />;
+const Toolbar = (props: ToolbarProps) => <Form {...props} className="toolbar" />;
 
 /* -------------------------------------------------------------------------------------------------
  * ToolbarItem

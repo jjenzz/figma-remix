@@ -21,12 +21,12 @@ export const action: ActionFunction = async ({ params, request }) => {
     case 'update':
       const shapeData = shapeModel.parse<Prisma.ShapeUpdateInput>(formData);
       await shapeModel.updateShape(shapeId, shapeData);
-      return redirect(`/${shapeId}`);
+      return redirect(`/s/${shapeId}`);
     case 'delete':
       await shapeModel.deleteShape(shapeId);
       return redirect('/');
     default:
-      return redirect(`/${shapeId}`);
+      return redirect(`/s/${shapeId}`);
   }
 };
 
@@ -34,7 +34,7 @@ export default function NewShape() {
   const shape = Remix.useLoaderData<ShapeModel>();
 
   return (
-    <Config.Root>
+    <Config.Root key={shape.id}>
       <input type="hidden" name="type" value={shape.type} />
       <Config.Panel>
         <Config.Input

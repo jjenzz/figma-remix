@@ -1,3 +1,4 @@
+import * as Remix from '@remix-run/react';
 import clsx from 'clsx';
 
 /* -------------------------------------------------------------------------------------------------
@@ -15,19 +16,24 @@ const Layers = (props: LayersProps) => <ol {...props} className="layers" />;
  * -----------------------------------------------------------------------------------------------*/
 
 interface LayersItemProps {
+  id?: string;
   layerId?: number;
   active?: boolean;
   children: React.ReactNode;
 }
 
-const LayersItem = ({ layerId, active = false, children }: LayersItemProps) => (
+const LayersItem = ({ id, layerId, active = false, children }: LayersItemProps) => (
   <li className="layers__item">
-    <a
-      href={`/s/${layerId}`}
+    <Remix.Link
+      replace
+      to={{
+        pathname: `/s/${layerId}`,
+        hash: `#${id}`,
+      }}
       className={clsx('layers__trigger', active && 'layers__trigger--active')}
     >
       {children}
-    </a>
+    </Remix.Link>
   </li>
 );
 

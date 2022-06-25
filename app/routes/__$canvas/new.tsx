@@ -37,6 +37,7 @@ export default function NewShape() {
     <>
       {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
       <Shape.Root
+        key={shape.type}
         active
         type={shape.type.toLowerCase() as any}
         style={{ pointerEvents: 'none', transform: 'translate(-50%, -50%)' }}

@@ -1,7 +1,7 @@
-import type { Shape as ShapeModel } from '~/models/shape.server';
 import type { LinksFunction, LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import * as Remix from '@remix-run/react';
+import type { Shape as ShapeModel } from '~/models/shape.server';
 import * as shapeModel from '~/models/shape.server';
 import * as Toolbar from '~/components/toolbar';
 import * as Layers from '~/components/layers';
@@ -10,7 +10,6 @@ import * as Shape from '~/components/shape';
 
 type LoaderData = {
   shapes: ShapeModel[];
-  activeShapeId?: ShapeModel['id'];
 };
 
 export const links: LinksFunction = () => [
@@ -22,20 +21,21 @@ export const links: LinksFunction = () => [
 
 export const loader: LoaderFunction = async ({ params }) => {
   const shapes = await shapeModel.getAllShapes();
-  const activeShapeId = params.id ? Number(params.id) : undefined;
-  const data: LoaderData = { shapes, activeShapeId };
+  const data: LoaderData = { shapes };
   return json(data);
 };
 
 export default function Index() {
   const data = Remix.useLoaderData<LoaderData>();
+  const params = Remix.useParams();
+  const activeShapeId = params.id ? Number(params.id) : undefined;
 
   return (
     <>
       <header className="header">
-        <a href="/" className="logo">
+        <Remix.Link replace to="/" className="logo">
           F
-        </a>
+        </Remix.Link>
         <Toolbar.Root action="/new/#shape">
           <Toolbar.Item type="circle">circle</Toolbar.Item>
           <Toolbar.Item type="rect">rectangle</Toolbar.Item>
@@ -45,7 +45,12 @@ export default function Index() {
       <main className="main">
         <Layers.Root>
           {data.shapes.map((shape) => (
-            <Layers.Item key={shape.id} layerId={shape.id} active={shape.id === data.activeShapeId}>
+            <Layers.Item
+              key={shape.id}
+              id={`shape-${shape.id}`}
+              layerId={shape.id}
+              active={shape.id === activeShapeId}
+            >
               {{ RECT: 'Rectangle', CIRCLE: 'Circle' }[shape.type] || null} {shape.id}
             </Layers.Item>
           ))}
@@ -57,14 +62,14 @@ export default function Index() {
 
           <div className="canvas__inner">
             {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
-            <a href="/" className="canvas__focus" />
+            <Remix.Link replace to="/" className="canvas__focus" />
 
             {data.shapes.map((shape) => (
               <Shape.Root
                 key={shape.id}
                 href={`/s/${shape.id}`}
                 id={`shape-${shape.id}`}
-                active={shape.id === data.activeShapeId}
+                active={shape.id === activeShapeId}
                 type={shape.type.toLowerCase() as any}
                 width={shape.width}
                 height={shape.height}
