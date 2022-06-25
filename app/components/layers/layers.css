@@ -5,7 +5,22 @@
   flex-direction: column;
 }
 
+.layers__item {
+  display: flex;
+}
+
+.layers__item--border-bottom {
+  /* border-bottom: 1px dashed #ccc; */
+  box-shadow: 0px 3px 0px 0px royalblue;
+}
+
+.layers__item--border-top {
+  /* border-top: 1px dashed #ccc; */
+  box-shadow: 0px -3px 0px 0px royalblue;
+}
+
 .layers__trigger {
+  flex: 1;
   display: block;
   padding: 10px;
   text-decoration: none;
@@ -16,9 +31,12 @@
 }
 
 .layers__trigger--active {
-  background: #daecf7;
+  background: rgba(218, 236, 247, 0.5);
 }
 
 .layers__trigger:not(.layers__trigger--active):hover {
   box-shadow: inset 0 0 0 1px royalblue;
+}
+
+.layers__move-controls {
 }

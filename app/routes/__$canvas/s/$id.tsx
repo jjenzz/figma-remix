@@ -25,6 +25,11 @@ export const action: ActionFunction = async ({ params, request }) => {
     case 'delete':
       await shapeModel.deleteShape(shapeId);
       return redirect('/');
+    case 'move':
+      await shapeModel.moveShape(Number(formData.get('id')), Number(formData.get('z')));
+      // prevent redirects when called from a fetcher
+      if (formData.get('fetcher')) return null;
+      return redirect('/');
     default:
       return redirect(`/s/${shapeId}`);
   }

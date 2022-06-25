@@ -1,3 +1,4 @@
+import * as React from 'react';
 import type { LinksFunction, LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import * as Remix from '@remix-run/react';
@@ -26,9 +27,10 @@ export const loader: LoaderFunction = async ({ params }) => {
 };
 
 export default function Index() {
-  const data = Remix.useLoaderData<LoaderData>();
   const params = Remix.useParams();
   const activeShapeId = params.id ? Number(params.id) : undefined;
+
+  const shapes = useOrderedShapes();
 
   return (
     <>
@@ -44,12 +46,14 @@ export default function Index() {
 
       <main className="main">
         <Layers.Root>
-          {data.shapes.map((shape) => (
+          {shapes.map((shape) => (
             <Layers.Item
               key={shape.id}
               id={`shape-${shape.id}`}
               layerId={shape.id}
               active={shape.id === activeShapeId}
+              z={shape.z}
+              maxZ={shapes[shapes.length - 1].z}
             >
               {{ RECT: 'Rectangle', CIRCLE: 'Circle' }[shape.type] || null} {shape.id}
             </Layers.Item>
@@ -64,7 +68,7 @@ export default function Index() {
             {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
             <Remix.Link replace to="/" className="canvas__focus" />
 
-            {data.shapes.map((shape) => (
+            {shapes.map((shape) => (
               <Shape.Root
                 key={shape.id}
                 href={`/s/${shape.id}`}
@@ -85,4 +89,44 @@ export default function Index() {
       </main>
     </>
   );
+}
+
+function useOrderedShapes() {
+  const data = Remix.useLoaderData<LoaderData>();
+  const fetchers = Remix.useFetchers();
+
+  return React.useMemo(() => {
+    const newShapes = JSON.parse(JSON.stringify(data.shapes)) as typeof data.shapes;
+
+    for (let fetcher of fetchers) {
+      if (!fetcher.submission || fetcher.submission.formData.get('__action') !== 'move') {
+        continue;
+      }
+
+      const id = Number(fetcher.submission.formData.get('id'));
+      const newZ = Number(fetcher.submission.formData.get('z'));
+
+      let direction: 'down' | 'up' = 'up';
+      for (const shape of newShapes) {
+        if (shape.id === id) {
+          direction = shape.z < newZ ? 'down' : 'up';
+          shape.z = newZ;
+          break;
+        }
+      }
+      for (const shape of newShapes) {
+        if (shape.id === id) {
+          continue;
+        }
+
+        if (direction === 'down' && shape.z <= newZ) {
+          shape.z -= 1;
+        } else if (direction === 'up' && shape.z >= newZ) {
+          shape.z += 1;
+        }
+      }
+    }
+
+    return newShapes.sort((a, b) => (a.z - b.z > 0 ? 1 : -1));
+  }, [data, fetchers]);
 }
