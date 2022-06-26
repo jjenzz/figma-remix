@@ -9,6 +9,11 @@
   display: flex;
 }
 
+.layers__item:hover .layers__move-controls,
+.layers__item:focus-within .layers__move-controls {
+  display: flex;
+}
+
 .layers__item--border-bottom {
   /* border-bottom: 1px dashed #ccc; */
   box-shadow: 0px 3px 0px 0px royalblue;
@@ -39,4 +44,5 @@
 }
 
 .layers__move-controls {
+  display: none;
 }

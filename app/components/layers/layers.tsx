@@ -84,27 +84,26 @@ const LayersItem = ({ id, layerId, z, maxZ, active = false, children }: LayersIt
       data-handler-id={handlerId}
     >
       <Remix.Link
+        className={clsx('layers__trigger', active && 'layers__trigger--active')}
         replace
         to={{
           pathname: `/s/${layerId}`,
           hash: `#${id}`,
         }}
-        className={clsx('layers__trigger', active && 'layers__trigger--active')}
       >
         {children}
       </Remix.Link>
-      <noscript>
-        <fetcher.Form className="layers__move-controls" method="post" action={`/s/${layerId}`}>
-          <input type="hidden" name="__action" value="move" />
-          <input type="hidden" name="id" value={layerId} />
-          <button disabled={z >= maxZ} name="z" value={z + 1}>
-            ⬇️
-          </button>
-          <button disabled={z <= 0} name="z" value={z - 1}>
-            ⬆️
-          </button>
-        </fetcher.Form>
-      </noscript>
+
+      <fetcher.Form className="layers__move-controls" method="post" action={`/s/${layerId}`}>
+        <input type="hidden" name="__action" value="move" />
+        <input type="hidden" name="id" value={layerId} />
+        <button disabled={z >= maxZ} name="z" value={z + 1}>
+          ⬇️
+        </button>
+        <button disabled={z <= 0} name="z" value={z - 1}>
+          ⬆️
+        </button>
+      </fetcher.Form>
     </li>
   );
 };
