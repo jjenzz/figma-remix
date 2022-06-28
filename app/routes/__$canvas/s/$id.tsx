@@ -15,21 +15,21 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export const action: ActionFunction = async ({ params, request }) => {
   const formData = await request.formData();
-  const shapeId = Number(params.id!);
+  let shapeId = Number(params.id!);
   const action = formData.get('__action');
   switch (action) {
     case 'update':
       const shapeData = shapeModel.parse<Prisma.ShapeUpdateInput>(formData);
       await shapeModel.updateShape(shapeId, shapeData);
-      return redirect(`/s/${shapeId}`);
+      return null;
     case 'delete':
       await shapeModel.deleteShape(shapeId);
       return redirect('/');
     case 'move':
-      await shapeModel.moveShape(Number(formData.get('id')), Number(formData.get('z')));
+      shapeId = Number(formData.get('id'));
+      await shapeModel.moveShape(shapeId, Number(formData.get('z')));
       // prevent redirects when called from a fetcher
       if (formData.get('fetcher')) return null;
-      return redirect('/');
     default:
       return redirect(`/s/${shapeId}`);
   }
