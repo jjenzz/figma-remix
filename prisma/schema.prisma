@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
 }
 
 datasource db {
@@ -16,11 +17,12 @@ enum ShapeType {
 }
 
 model Shape {
-  id                Int @id @default(autoincrement())
-  type              ShapeType
-  background_color  String?
-  width             Int
-  height            Int
-  x                 Int?
-  y                 Int?
+  id               Int       @id @default(autoincrement())
+  type             ShapeType
+  background_color String?
+  width            Int
+  height           Int
+  x                Int?
+  y                Int?
+  z                Int?
 }

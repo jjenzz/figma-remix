@@ -1,10 +1,11 @@
+import * as Remix from '@remix-run/react';
 import clsx from 'clsx';
 
 /* -------------------------------------------------------------------------------------------------
  * Shape
  * -----------------------------------------------------------------------------------------------*/
 
-interface ShapeProps extends React.ComponentProps<'a'> {
+interface ShapeProps extends Omit<React.ComponentProps<'a'>, 'ref'> {
   id?: string;
   type: 'rect' | 'circle';
   x?: number;
@@ -25,13 +26,18 @@ const Shape = (props: ShapeProps) => {
     height,
     backgroundColor,
     active = false,
+    href,
     ...rest
   } = props;
 
   return (
     /* eslint-disable-next-line jsx-a11y/anchor-has-content */
-    <a
-      href={'#' + id}
+    <Remix.Link
+      replace
+      to={{
+        pathname: href,
+        hash: `#${id}`,
+      }}
       id={id}
       {...rest}
       className={clsx('shape', `shape--${type}`, active && 'shape--active')}

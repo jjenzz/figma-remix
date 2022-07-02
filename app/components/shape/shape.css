@@ -9,7 +9,12 @@
   outline: none;
 }
 
-.shape:target,
+/*
+  :target gets stuck when JS is enabled as it doesn't update
+  without a full page reload. This state is also handled by
+  .shape--active on SSR anc CSR.
+*/
+/* .shape:target, */
 .shape:hover,
 .shape--active {
   outline: 2px solid royalblue;

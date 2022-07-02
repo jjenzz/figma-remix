@@ -1,12 +1,14 @@
+import { Form } from '@remix-run/react';
+
 /* -------------------------------------------------------------------------------------------------
  * Config
  * -----------------------------------------------------------------------------------------------*/
 
-interface ConfigProps {
+interface ConfigProps extends React.ComponentProps<typeof Form> {
   children: React.ReactNode;
 }
 
-const Config = (props: ConfigProps) => <form {...props} className="config" method="post" />;
+const Config = (props: ConfigProps) => <Form {...props} className="config" method="post" />;
 
 interface ConfigPanelProps {
   children: React.ReactNode;
